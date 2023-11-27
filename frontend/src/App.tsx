@@ -14,6 +14,11 @@ function App() {
 
     return (
         <div id="App">
+            <div style={{
+                height: '24px',
+                background: '#999',
+                '--wails-draggable': 'drag'
+            }}></div>
             <GlobalKeySetting />
             <div id="result" className="result">{resultText}</div>
             <div id="input" className="input-box">

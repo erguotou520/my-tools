@@ -7,6 +7,7 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
@@ -25,7 +26,7 @@ func main() {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 0},
+		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 1},
 		Windows: &windows.Options{
 			WebviewIsTransparent:              true,
 			WindowIsTranslucent:               true,
@@ -39,6 +40,23 @@ func main() {
 				LightModeTitleBar:  windows.RGB(200, 200, 200),
 				LightModeTitleText: windows.RGB(20, 20, 20),
 				LightModeBorder:    windows.RGB(200, 200, 200),
+			},
+		},
+		Mac: &mac.Options{
+			WebviewIsTransparent: true,
+			WindowIsTranslucent:  true,
+			TitleBar: &mac.TitleBar{
+				TitlebarAppearsTransparent: true,
+				HideTitle:                  false,
+				HideTitleBar:               false,
+				FullSizeContent:            false,
+				UseToolbar:                 true,
+				HideToolbarSeparator:       true,
+			},
+			Appearance: mac.DefaultAppearance,
+			About: &mac.AboutInfo{
+				Title:   "my-tools",
+				Message: "my-tools",
 			},
 		},
 		OnStartup: app.startup,
