@@ -4,19 +4,22 @@ import (
 	"context"
 	"fmt"
 
+	hook "github.com/robotn/gohook"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
-	"golang.design/x/hotkey"
 )
 
 // App struct
 type App struct {
-	ctx          context.Context
-	globalHotKey *hotkey.Hotkey
+	ctx           context.Context
+	globalHotKey  []string
+	windowVisible bool
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	return &App{
+		windowVisible: true,
+	}
 }
 
 // startup is called when the app starts. The context is saved
@@ -31,28 +34,19 @@ func (a *App) Greet(name string) string {
 }
 
 // 全局快捷键注册
-func (a *App) RegisterGlobalHotkey(modifiers []hotkey.Modifier, key hotkey.Key) bool {
+func (a *App) RegisterGlobalHotkey(keys []string) bool {
 	if a.globalHotKey != nil {
-		a.globalHotKey.Unregister()
+		hook.End()
 	}
-	hk := hotkey.New(modifiers, key)
-	err := hk.Register()
-	if err != nil {
-		runtime.LogInfo(a.ctx, fmt.Sprintf("快捷键注册失败: %v", err))
-		return false
-	}
-	a.globalHotKey = hk
-	runtime.LogInfo(a.ctx, fmt.Sprintf("快捷键: %v 已注册", hk))
-	isHotKeyRegistered := true
-	go func() {
-		for range hk.Keydown() {
-			if isHotKeyRegistered {
-				runtime.WindowHide(a.ctx)
-			} else {
-				runtime.WindowShow(a.ctx)
-			}
-			isHotKeyRegistered = !isHotKeyRegistered
-		}
-	}()
+	var _keys []string
+	_keys = append(_keys, "shift")
+	_keys = append(_keys, "shift")
+	hook.Register(hook.KeyDown, _keys, func(e hook.Event) {
+		a.globalHotKey = keys
+		runtime.LogInfo(a.ctx, fmt.Sprintf("快捷键: %v 已注册", keys))
+	})
+
+	s := hook.Start()
+	<-hook.Process(s)
 	return true
 }
