@@ -3,8 +3,8 @@ module changeme
 go 1.18
 
 require (
+	github.com/robotn/gohook v0.41.0
 	github.com/wailsapp/wails/v2 v2.6.0
-	golang.design/x/hotkey v0.4.1
 )
 
 require (
@@ -22,7 +22,6 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/robotn/gohook v0.41.0 // indirect
 	github.com/samber/lo v1.38.1 // indirect
 	github.com/tkrajina/go-reflector v0.5.6 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
