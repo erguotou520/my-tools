@@ -26,12 +26,12 @@ func main() {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 1},
+		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 0},
 		Windows: &windows.Options{
 			WebviewIsTransparent:              true,
 			WindowIsTranslucent:               true,
 			DisableWindowIcon:                 false,
-			DisableFramelessWindowDecorations: false,
+			DisableFramelessWindowDecorations: true,
 			Theme:                             windows.SystemDefault,
 			CustomTheme: &windows.ThemeSettings{
 				DarkModeTitleBar:   windows.RGB(20, 20, 20),
@@ -53,7 +53,7 @@ func main() {
 				UseToolbar:                 true,
 				HideToolbarSeparator:       true,
 			},
-			Appearance: mac.DefaultAppearance,
+			// Appearance: mac.DefaultAppearance,
 			About: &mac.AboutInfo{
 				Title:   "my-tools",
 				Message: "my-tools",

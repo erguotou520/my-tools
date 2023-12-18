@@ -66,7 +66,7 @@ func (h *AppHotKey) startKeyListen() {
 		)
 		for ev := range s {
 			var kCode = ev.Keycode
-			if ev.Kind == hook.KeyHold && slices.Contains[uint16](h.triggerKeys, kCode) {
+			if ev.Kind == hook.KeyHold && slices.Contains[[]uint16](h.triggerKeys, kCode) {
 				if isPressing {
 					if timer != nil {
 						timer.Stop()
@@ -81,7 +81,7 @@ func (h *AppHotKey) startKeyListen() {
 					})
 				}
 			} else {
-				if isPressing {
+				if ev.Kind != hook.KeyUp && isPressing {
 					isPressing = false
 					if timer != nil {
 						timer.Stop()

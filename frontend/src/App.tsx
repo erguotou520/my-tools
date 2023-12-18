@@ -17,6 +17,7 @@ function App() {
             <div style={{
                 height: '24px',
                 background: '#999',
+                // @ts-ignore
                 '--wails-draggable': 'drag'
             }}></div>
             <GlobalKeySetting />

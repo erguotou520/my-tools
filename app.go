@@ -3,15 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+	"my-tools/app/hotkey"
 
-	hook "github.com/robotn/gohook"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
 type App struct {
 	ctx           context.Context
-	globalHotKey  []string
+	globalHotKey  *hotkey.AppHotKey
 	windowVisible bool
 }
 
@@ -19,6 +19,7 @@ type App struct {
 func NewApp() *App {
 	return &App{
 		windowVisible: true,
+		globalHotKey:  nil,
 	}
 }
 
@@ -26,6 +27,14 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+	a.globalHotKey = hotkey.NewAppHotKey(func() {
+		if a.windowVisible {
+			runtime.WindowHide(a.ctx)
+		} else {
+			runtime.WindowShow(a.ctx)
+		}
+		a.windowVisible = !a.windowVisible
+	})
 }
 
 // Greet returns a greeting for the given name
@@ -35,18 +44,10 @@ func (a *App) Greet(name string) string {
 
 // 全局快捷键注册
 func (a *App) RegisterGlobalHotkey(keys []string) bool {
-	if a.globalHotKey != nil {
-		hook.End()
-	}
-	var _keys []string
-	_keys = append(_keys, "shift")
-	_keys = append(_keys, "shift")
-	hook.Register(hook.KeyDown, _keys, func(e hook.Event) {
-		a.globalHotKey = keys
-		runtime.LogInfo(a.ctx, fmt.Sprintf("快捷键: %v 已注册", keys))
-	})
+	return a.globalHotKey.RegisterGlobalHotkey(keys)
+}
 
-	s := hook.Start()
-	<-hook.Process(s)
-	return true
+// 关闭窗口
+func (a *App) CloseWindow() {
+	runtime.WindowHide(a.ctx)
 }
