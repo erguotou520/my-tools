@@ -1,4 +1,4 @@
-import { RegisterGlobalHotkey } from '../../wailsjs/go/app/App'
+import { RegisterGlobalHotkey } from '@wails/go/app/App'
 
 const GlobalKeySetting = () => {
   return (
