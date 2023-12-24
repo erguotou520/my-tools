@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"my-tools/app"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/logger"
@@ -16,12 +17,12 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the app structure
-	app := NewApp()
+	app := app.NewApp()
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:     "my-tools",
-		Width:     1024,
-		Height:    768,
+		Width:     880,
+		Height:    80,
 		Frameless: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
@@ -31,7 +32,7 @@ func main() {
 			WebviewIsTransparent:              true,
 			WindowIsTranslucent:               true,
 			DisableWindowIcon:                 false,
-			DisableFramelessWindowDecorations: true,
+			DisableFramelessWindowDecorations: false,
 			Theme:                             windows.SystemDefault,
 			CustomTheme: &windows.ThemeSettings{
 				DarkModeTitleBar:   windows.RGB(20, 20, 20),
@@ -53,13 +54,13 @@ func main() {
 				UseToolbar:                 true,
 				HideToolbarSeparator:       true,
 			},
-			// Appearance: mac.DefaultAppearance,
+			Appearance: mac.DefaultAppearance,
 			About: &mac.AboutInfo{
 				Title:   "my-tools",
 				Message: "my-tools",
 			},
 		},
-		OnStartup: app.startup,
+		OnStartup: app.Startup,
 		Bind: []interface{}{
 			app,
 		},
