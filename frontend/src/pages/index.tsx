@@ -1,16 +1,16 @@
-// import GlobalKeySetting from './components/GlobalKeySetting'
 import { useEffect } from 'react'
 import GlobalSearch from '@/components/GlobalSearch'
-// import { setWindowSize } from './utils/window'
+import { useLocation } from 'react-router'
+import { setWindowSize } from '@/utils/window'
 
 function App() {
-  // useEffect(() => {
-  //   setWindowSize(80)
-  // }, [])
+  const location = useLocation()
+  useEffect(() => {
+    setWindowSize(200)
+  }, [location])
   return (
     <div className="h-screen w-screen overflow-hidden rounded-md p-2">
       <GlobalSearch />
-      {/* <GlobalKeySetting /> */}
     </div>
   )
 }
